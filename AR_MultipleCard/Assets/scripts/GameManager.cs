@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
     public float turn = 1.5f;
     [Header("縮放"), Range(0f, 5f)]
     public float size = 0.015f;
+    [Header("兔子動畫元件")]
+    public Animator aniRabbit;
+    [Header("蝙蝠動畫元件")]
+    public Animator aniBat;
 
     //Range : 範圍
     //也可用語法：
@@ -40,6 +44,8 @@ public class GameManager : MonoBehaviour
     {
         print("開始事件");
     }
+    //public float test = 1;
+    //public float test2 = 1;
 
     //更新事件 : 遊戲每個影格會執行一次
     //一秒60格(60FPS)
@@ -55,6 +61,42 @@ public class GameManager : MonoBehaviour
         //+= 累加(遞增) : 原有的數值遞增上去
         bat.localScale += new Vector3(1, 1, 1) * Joystick.Vertical * size;    //蝙蝠.區域尺寸 = 新 三維向量(1,1,1) * 虛擬搖桿垂直
         rabbit.localScale += new Vector3(1,1,1) * Joystick.Vertical * size;   //兔子.區域尺寸 
+        bat.localScale = new Vector3(1, 1, 1) * Mathf.Clamp(bat.localScale.x, 0.5f, 3.5f);
+        rabbit.localScale = new Vector3(1, 1, 1) * Mathf.Clamp(rabbit.localScale.x, 0.5f, 3.5f);
+
+        //test = Mathf.Clamp(test, 0.5f, 9.9f);
+        //print(Mathf.Clamp(test2, 0, 10));
     }
 
+    //定義方法   Method
+    //定義程式區塊
+    //語法1：
+    //修飾詞 類型 名稱 () {}
+    //要給按鈕呼叫必須設為公開  pubilc
+    //無類型 void
+    public void Attack()
+    {
+        print("攻擊");
+        aniBat.SetTrigger("攻擊觸發");
+    }
+    public void Move()
+    {
+        print("移動");
+        aniBat.SetTrigger("移動觸發");
+    }
+    public void Die()
+    {
+        print("死亡");
+        aniBat.SetTrigger("死亡觸發");
+    }
+
+    //定義方法   Method
+    //語法2：修飾詞 類型 名稱(參數1，參數2，˙˙˙˙˙){}
+
+    public void PlayAnimation(string aniName)
+    {
+        print(aniName);
+        aniBat.SetTrigger(aniName);
+        aniRabbit.SetTrigger(aniName);
+    }
 }
